@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --aot",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy": "ng deploy --base-href=/TFG-2023-YagoPerezMolanes-FlyingTrack/"
