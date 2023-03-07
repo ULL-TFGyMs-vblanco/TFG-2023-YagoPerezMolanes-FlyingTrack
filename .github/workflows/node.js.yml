@@ -15,7 +15,7 @@ jobs:
    
    defaults:
       run:
-        working-directory: ng-toolkit
+        working-directory: flying-track-ft
     
    strategy:
       matrix:
