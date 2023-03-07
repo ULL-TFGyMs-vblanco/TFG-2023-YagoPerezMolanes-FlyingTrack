@@ -1,3 +1,5 @@
+[![CI Tests Angular](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-YagoPerezMolanes-FlyingTrack/actions/workflows/node.js.yml/badge.svg)](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-YagoPerezMolanes-FlyingTrack/actions/workflows/node.js.yml)
+
 # TFG/TFM template github project
 
 Versión de node: 19.7.0
