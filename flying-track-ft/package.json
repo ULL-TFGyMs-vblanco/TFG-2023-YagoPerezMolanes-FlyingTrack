@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production",
+    "build:prod": "ng build --configuration production --base-href https://ull-tfgyms-vblanco.github.io/TFG-2023-YagoPerezMolanes-FlyingTrack/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy": "ng deploy --base-href=/TFG-2023-YagoPerezMolanes-FlyingTrack/",
