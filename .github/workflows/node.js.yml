@@ -31,5 +31,4 @@ jobs:
         cache: 'npm'
         cache-dependency-path: '**/package-lock.json'
     - run: npm install
-    - run: npm run deploy
     - run: npm run test:prod
