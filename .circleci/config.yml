@@ -3,7 +3,7 @@ orbs:
   browser-tools: circleci/browser-tools@1.2.3
 jobs:
   build:
-    working_directory: ~/ng-project
+    working_directory: flying-track-ft
     docker:
       - image: cimg/node:16.13.1-browsers
     steps:
