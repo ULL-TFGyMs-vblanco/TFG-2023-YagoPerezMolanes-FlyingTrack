@@ -14,12 +14,5 @@ jobs:
             google-chrome --version
             chromedriver --version
           name: Check install
-      - restore_cache:
-          key: flying-track-ft-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run: cd flying-track-ft
       - run: npm install
-      - save_cache:
-          key: flying-track-ft-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          paths:
-            - "node_modules"
       - run: npm run test
