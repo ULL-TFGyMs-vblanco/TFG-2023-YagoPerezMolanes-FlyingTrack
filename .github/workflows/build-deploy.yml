@@ -30,12 +30,5 @@ jobs:
       run: npm run test:prod
 
     - name: Build
-      run: npm run build:prod
+      run: npm run deploy
 
-    - name: Deploy
-      if: success()
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: dist/flying-track-ft
-        enable_jekyll: true
