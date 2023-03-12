@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker'; // notificaciones de actulizacion, comprobaciones de actualizacion, del service worker
 import { Platform } from '@angular/cdk/platform'; // conjunto de primitivas de comportamiento para crear componentes de interfaz de usuario
 import { filter, map } from 'rxjs/operators'; 
+import { Map, TileLayer, tileLayer } from 'leaflet';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements AfterViewInit{
   title = 'flying-track-ft';
 
   isOnline: boolean;
   modalVersion: boolean;
   modalPwaEvent: any;
   modalPwaPlatform: string|undefined; // tipo de plataforma, ios, android
+  map: Map | any;
 
   constructor(private platform: Platform, private swUpdate: SwUpdate) {
     this.isOnline = false;
@@ -22,7 +24,7 @@ export class AppComponent implements OnInit{
   }
 
   // metodo de inicio, comprueba la conectividad del navegador 
-  public ngOnInit(): void {
+  public ngAfterViewInit(): void {
     this.updateOnlineStatus();
 
     // anade un evento de escucha
@@ -40,6 +42,7 @@ export class AppComponent implements OnInit{
     }
     // carga el modal
     this.loadModalPwa();
+    this.initMap();
   }
 
   // comprueba si el navegador esta online o no
@@ -87,7 +90,19 @@ export class AppComponent implements OnInit{
     this.modalPwaPlatform = undefined;
   }
 
+  private initMap(): void {
+    this.map = new Map('map', {
+      center: [39.8282, -98.5795],
+      zoom: 3      
+    });
 
+    const tiles = new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      minZoom: 3,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
 
+    tiles.addTo(this.map);
+  }
 
 }
