@@ -2,8 +2,24 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker'; // notificaciones de actulizacion, comprobaciones de actualizacion, del service worker
 import { Platform } from '@angular/cdk/platform'; // conjunto de primitivas de comportamiento para crear componentes de interfaz de usuario
 import { filter, map } from 'rxjs/operators'; 
-import { Map, TileLayer, tileLayer } from 'leaflet';
+import { Map, TileLayer, Marker, Icon, tileLayer, Popup, LatLngExpression } from 'leaflet';
 
+import { MarkerService } from './services/marker.service';
+
+const iconRetinaUrl = 'assets/marker-icon-2x.png';
+const iconUrl = 'assets/marker-icon.png';
+const shadowUrl = 'assets/marker-shadow.png';
+const iconDefault = new Icon({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41]
+});
+Marker.prototype.options.icon = iconDefault;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,13 +34,14 @@ export class AppComponent implements AfterViewInit{
   modalPwaPlatform: string|undefined; // tipo de plataforma, ios, android
   map: Map | any;
 
-  constructor(private platform: Platform, private swUpdate: SwUpdate) {
+  constructor(private platform: Platform, private swUpdate: SwUpdate, private markerService: MarkerService) {
     this.isOnline = false;
     this.modalVersion = false;
   }
 
   // metodo de inicio, comprueba la conectividad del navegador 
   public ngAfterViewInit(): void {
+
     this.updateOnlineStatus();
 
     // anade un evento de escucha
@@ -42,7 +59,46 @@ export class AppComponent implements AfterViewInit{
     }
     // carga el modal
     this.loadModalPwa();
-    this.initMap();
+    // this.initMap();
+    
+    if (!navigator.geolocation) {
+      console.log('location is not supported');
+    }
+    navigator.geolocation.getCurrentPosition((position) => {
+      const coords = position.coords;
+      const latLong = [coords.latitude, coords.longitude];
+      console.log(
+        `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+      );
+      let mymap = new Map('map').setView(latLong as LatLngExpression, 13);
+
+      new TileLayer(
+        'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VicmF0MDA3IiwiYSI6ImNrYjNyMjJxYjBibnIyem55d2NhcTdzM2IifQ.-NnMzrAAlykYciP4RP9zYQ',
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'your.mapbox.access.token',
+        }
+      ).addTo(mymap);
+
+      let marker = new Marker(latLong as LatLngExpression).addTo(mymap);
+
+      marker.bindPopup('<b>Hi</b>').openPopup();
+
+      let popup = new Popup()
+        .setLatLng(latLong as LatLngExpression)
+        .setContent('Here')
+        .openOn(mymap);
+    });
+    
+
+    // this.markerService.makeCapitalMarkers(this.map);
+    this.markerService.makeCapitalCircleMarkers(this.map);
+    this.watchPosition();
   }
 
   // comprueba si el navegador esta online o no
@@ -91,6 +147,7 @@ export class AppComponent implements AfterViewInit{
   }
 
   private initMap(): void {
+
     this.map = new Map('map', {
       center: [39.8282, -98.5795],
       zoom: 3      
@@ -103,6 +160,29 @@ export class AppComponent implements AfterViewInit{
     });
 
     tiles.addTo(this.map);
+  }
+
+  watchPosition() {
+    let desLat = 0;
+    let desLon = 0;
+    let id = navigator.geolocation.watchPosition(
+      (position) => {
+        console.log(
+          `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+        );
+        if (position.coords.latitude === desLat) {
+          navigator.geolocation.clearWatch(id);
+        }
+      },
+      (err) => {
+        console.log(err);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      }
+    );
   }
 
 }
