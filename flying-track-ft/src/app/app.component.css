@@ -1,14 +1,10 @@
-.ios-menu {
-  width: 14px;
-}
-
 .map-container {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  margin: 30px;
+  margin: 80px;
 }
 
 .map-frame {
@@ -18,4 +14,8 @@
 
 #map {
   height: 100%;
+}
+
+.ios-menu {
+  width: 14px;
 }
