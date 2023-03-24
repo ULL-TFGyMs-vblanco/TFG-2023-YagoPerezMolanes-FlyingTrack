@@ -23,6 +23,7 @@ export class AppComponent implements AfterViewInit {
   title = 'Offline-Map';
 
   private map: any;
+  private al: any
 
   private initMap(): void {
     if (!navigator.geolocation) {
