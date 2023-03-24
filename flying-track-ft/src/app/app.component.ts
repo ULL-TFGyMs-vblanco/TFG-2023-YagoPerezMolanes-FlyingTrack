@@ -35,7 +35,7 @@ export class AppComponent implements AfterViewInit {
       zoom: 3
     })
 
-    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const tiles = L.tileLayer('../assets/data/Canarias/{z}/{x}/{y}.png', {
       maxZoom: 10,
       minZoom: 7,
     });
