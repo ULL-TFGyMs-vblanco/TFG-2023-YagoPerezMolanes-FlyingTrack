@@ -18,8 +18,6 @@ export class AppComponent implements AfterViewInit {
   modalPwaEvent: any;
   modalPwaPlatform: string|undefined;
 
-  locationJS: any;
-
   title = 'Offline-Map';
 
   private map: any;
@@ -29,19 +27,45 @@ export class AppComponent implements AfterViewInit {
       console.log('location is not supported');
     }
 
-    this.map = L.map('map', {
-      center: [ 29.023152, -13.647079 ],
-      zoom: 3
-    })
+    // this.map = L.map('map', {
+    //   center: [ 29.023152, -13.647079 ],
+    //   zoom: 3
+    // })
 
-    const tiles = L.tileLayer('../assets/data/Canarias/{z}/{x}/{y}.png', {
-      maxZoom: 10,
-      minZoom: 7,
+    // const tiles = L.tileLayer('../assets/data/Canarias/{z}/{x}/{y}.png', {
+    //   maxZoom: 10,
+    //   minZoom: 7,
+    // });
+
+    // tiles.addTo(this.map);
+    
+    navigator.geolocation.getCurrentPosition((position) => {
+      const coords = position.coords;
+      const latLong = [coords.latitude, coords.longitude];
+      console.log(
+        `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+      );
+
+      this.map = L.map('map', {
+        center: [ 29.023152, -13.647079 ],
+        zoom: 3
+      });
+
+      const tiles = L.tileLayer('./assets/data/Canarias/{z}/{x}/{y}.png', {
+        maxZoom: 10,
+        minZoom: 7,
+      });
+
+      tiles.addTo(this.map);
+
+      let marker = L.marker(latLong as LatLngExpression).addTo(this.map);
+
+      marker.bindPopup('<b>Hi</b>').openPopup();
+
+      let popup = L.popup().setLatLng(latLong as LatLngExpression).setContent('Estoy aqui').openOn(this.map);
     });
 
-    tiles.addTo(this.map);
-    // L.control.locate().addTo(this.map);
-    this.map.locate();
+    this.watchPosition();
     
 
   }
@@ -109,5 +133,28 @@ export class AppComponent implements AfterViewInit {
 
   public closePwa(): void {
     this.modalPwaPlatform = undefined;
+  }
+
+  watchPosition() {
+    let desLat = 0;
+    let desLon = 0;
+    let id = navigator.geolocation.watchPosition(
+      (position) => {
+        console.log(
+          `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+        );
+        if (position.coords.latitude === desLat) {
+          navigator.geolocation.clearWatch(id);
+        }
+      },
+      (err) => {
+        console.log(err);
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 100000,
+        maximumAge: 0,
+      }
+    );
   }
 }
