@@ -102,7 +102,7 @@ export class AppComponent implements AfterViewInit {
     this.loadModalPwa();
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('../../geolocation-worker.js').then(registration => {
+      navigator.serviceWorker.register('/geolocation-worker.js').then(registration => {
         console.log('Service worker registered:', registration);
         navigator.serviceWorker.controller?.postMessage('getLocation');
       }).catch(error => {
