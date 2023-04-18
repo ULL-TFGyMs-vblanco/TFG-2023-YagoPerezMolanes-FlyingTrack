@@ -5,6 +5,8 @@ import { filter, map } from 'rxjs/operators';
 import * as L from 'leaflet';
 import { Map } from 'leaflet';
 import { LatLngExpression } from 'leaflet';
+import { Geolocation, Position } from '@capacitor/geolocation';
+import * as Lo from 'leaflet.locatecontrol';
 
 @Component({
   selector: 'app-root',
@@ -20,53 +22,59 @@ export class AppComponent implements AfterViewInit {
 
   title = 'Offline-Map';
 
-  private map: any;
+  private map: Map | any;
+  public location: Position | any;
 
   private initMap(): void {
     if (!navigator.geolocation) {
       console.log('location is not supported');
     }
 
-    // this.map = L.map('map', {
-    //   center: [ 29.023152, -13.647079 ],
-    //   zoom: 3
-    // })
+    this.map = L.map('map', {
+      center: [ 29.023152, -13.647079 ],
+      zoom: 3
+    })
 
-    // const tiles = L.tileLayer('../assets/data/Canarias/{z}/{x}/{y}.png', {
-    //   maxZoom: 10,
-    //   minZoom: 7,
-    // });
-
-    // tiles.addTo(this.map);
-    
-    navigator.geolocation.getCurrentPosition((position) => {
-      const coords = position.coords;
-      const latLong = [coords.latitude, coords.longitude];
-      console.log(
-        `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-      );
-
-      this.map = L.map('map', {
-        center: [ 29.023152, -13.647079 ],
-        zoom: 3
-      });
-
-      const tiles = L.tileLayer('./assets/data/Canarias/{z}/{x}/{y}.png', {
-        maxZoom: 10,
-        minZoom: 7,
-      });
-
-      tiles.addTo(this.map);
-
-      let marker = L.marker(latLong as LatLngExpression).addTo(this.map);
-
-      marker.bindPopup('<b>Hi</b>').openPopup();
-
-      let popup = L.popup().setLatLng(latLong as LatLngExpression).setContent('Estoy aqui').openOn(this.map);
+    const tiles = L.tileLayer("../assets/data/Canarias/{z}/{x}/{y}.png", {
+      maxZoom: 10,
+      minZoom: 7,
     });
 
-    this.watchPosition();
+    tiles.addTo(this.map);
+
     
+
+    // console.log(this.map.locate({setView: true, maxZoom: 10, watch: true}));
+
+    // let marker = L.marker([ 29.023152, -13.647079 ]).addTo(this.map);
+
+    // navigator.geolocation.getCurrentPosition((position) => {
+    //   const coords = position.coords;
+    //   const latLong = [coords.latitude, coords.longitude];
+    //   console.log(
+    //     `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+    //   );
+
+    //   this.map = L.map('map', {
+    //     center: [ 29.023152, -13.647079 ],
+    //     zoom: 3
+    //   });
+
+    //   const tiles = L.tileLayer('./assets/data/Canarias/{z}/{x}/{y}.png', {
+    //     maxZoom: 10,
+    //     minZoom: 7,
+    //   });
+
+    //   tiles.addTo(this.map);
+
+    //   // let marker = L.marker(latLong as LatLngExpression).addTo(this.map);
+
+    //   // marker.bindPopup('<b>Hi</b>').openPopup();
+
+    //   // let popup = L.popup().setLatLng(latLong as LatLngExpression).setContent('Estoy aqui').openOn(this.map);
+    // });
+
+    // // this.watchPosition();
 
   }
 
@@ -92,6 +100,27 @@ export class AppComponent implements AfterViewInit {
       );
     } 
     this.loadModalPwa();
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../../geolocation-worker.js').then(registration => {
+        console.log('Service worker registered:', registration);
+        navigator.serviceWorker.controller?.postMessage('getLocation');
+      }).catch(error => {
+        console.error('Service worker registration failed:', error);
+      });
+    } else {
+      console.error('Service workers not supported');
+    }
+
+    navigator.serviceWorker.addEventListener('message', event => {
+      if (event.data && event.data.location) {
+        this.location = event.data.location;
+      } else if (event.data && event.data.error) {
+        console.error('Unable to retrieve location:', event.data.error);
+      }
+    });
+
+
     this.initMap();
   }
 

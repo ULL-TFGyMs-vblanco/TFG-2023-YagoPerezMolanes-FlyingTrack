@@ -36,6 +36,11 @@
   </div>
 </div>
 
+<div *ngIf="location">
+  Latitude: {{ location.coords.latitude }}<br>
+  Longitude: {{ location.coords.longitude }}
+</div>
+
 <div class="map-container">
   <div class="map-frame">
     <div id="map"></div>
