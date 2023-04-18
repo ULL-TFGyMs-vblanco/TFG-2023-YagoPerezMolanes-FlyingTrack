@@ -5,7 +5,6 @@ import { filter, map } from 'rxjs/operators';
 import * as L from 'leaflet';
 import { Map } from 'leaflet';
 import { LatLngExpression } from 'leaflet';
-import { Geolocation, Position } from '@capacitor/geolocation';
 import * as Lo from 'leaflet.locatecontrol';
 
 @Component({
@@ -23,7 +22,7 @@ export class AppComponent implements AfterViewInit {
   title = 'Offline-Map';
 
   private map: Map | any;
-  public location: Position | any;
+  public location: GeolocationPosition | any;
 
   private initMap(): void {
     if (!navigator.geolocation) {
