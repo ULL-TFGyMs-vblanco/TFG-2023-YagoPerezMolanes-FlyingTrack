@@ -13,7 +13,7 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     if ('serviceWorker' in navigator) {
       console.log("hola");
-      navigator.serviceWorker.register('custom-worker.js')
+      navigator.serviceWorker.register('geolocation-worker.js')
         .then(registration => {
           console.log("holaa");
           if (navigator.serviceWorker.controller) {
