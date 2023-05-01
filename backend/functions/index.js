@@ -21,6 +21,7 @@ app.use(require("./routes/index"));
 // convertimos los datos que esta recibiendo el servidor en un objeto de
 // javascript que voy a poder manejar
 app.use(express.json());
+app.set("port", (process.env.PORT || 3000));
 
 // el servidor escucha en el puerto 4000
 // app.listen(4000);

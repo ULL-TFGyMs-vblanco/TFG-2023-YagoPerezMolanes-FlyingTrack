@@ -55,5 +55,8 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
+  ],
+  "permissions": [
+    "geolocation"
   ]
 }
