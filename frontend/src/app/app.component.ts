@@ -1,22 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <h1>Current Position</h1>
-    <p>Latitude: {{ latitude }}</p>
-    <p>Longitude: {{ longitude }}</p>
-  `
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
+  title = 'frontend';
 
-  latitude: number | any;
-  longitude: number | any;
+  navbarOpen = false;
 
-  constructor() {}
-
-  ngOnInit() {
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
   }
-
 }
-

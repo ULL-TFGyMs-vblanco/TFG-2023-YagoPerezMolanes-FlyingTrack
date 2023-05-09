@@ -1,0 +1,59 @@
+.map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 20px;
+}
+
+.map-frame {
+  border: 2px solid black;
+  height: 100%;
+  margin-top: 60px;
+}
+
+#map {
+  position: sticky;
+  height: 100%;
+}
+
+.info-box {
+  background-color: #65c2da33;
+  padding: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.info-box-left {
+  float: left;
+}
+
+.info-box-right {
+  float: right;
+}
+
+.start-route-button {
+  position: sticky;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.end-route-button {
+  position: sticky;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 10px;
+}

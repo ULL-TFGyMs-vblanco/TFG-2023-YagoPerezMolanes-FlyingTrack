@@ -1,5 +1,6 @@
 const functions = require("firebase-functions");
 const express = require("express");
+const cors = require("cors")({origin: true});
 
 // importamos el fichero de conexion con la base de datos
 require("./database");
@@ -12,12 +13,20 @@ require("./database");
 //   response.send("Hello from Firebase!");
 // });
 
+
 // creamos el servidor express
 const app = express();
 
 // importamos el objeto router donde se encuentran las rutas
 app.use(require("./routes/index"));
 
+// este modulo agrega unas cuantas cabeceras a la peticion para poder ser
+// pasado del cliente al servidor
+app.use(cors({
+  origin: true,
+  methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 // convertimos los datos que esta recibiendo el servidor en un objeto de
 // javascript que voy a poder manejar
 app.use(express.json());

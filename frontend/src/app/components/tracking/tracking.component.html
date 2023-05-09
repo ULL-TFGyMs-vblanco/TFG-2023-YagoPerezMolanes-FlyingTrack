@@ -1,0 +1,26 @@
+<div class="map-container">
+  
+  <div class="map-frame">
+    <div id="map"></div>
+  </div>
+
+  <div class="container p-2"> 
+    <button class="start-route-button" (click)="trackPosition()">Iniciar ruta</button>
+
+    <button class="end-route-button" (click)="trackPosition()">Finalizar ruta</button>
+  </div>
+
+  <h6>Para usar esta funcionalidad necesitas estar autenticado</h6>
+    
+  <div class="info-box">
+    <div class="info-box-left">
+      <p id="latitude"> Latitud actual: {{ actualLtd }}</p>
+      <p id="longitude">Longitud actual: {{ actualLng }}</p>
+      <p id="altitude"> Altura actual: {{ actualAlt }}</p>
+    </div>
+    <div class="info-box-right">
+      <p id="heading"> Orientación actual: {{ actualHead }}</p>
+      <p id="speed"> Velocidad actual: {{ actualSpeed }}</p>
+    </div>
+  </div>
+</div>

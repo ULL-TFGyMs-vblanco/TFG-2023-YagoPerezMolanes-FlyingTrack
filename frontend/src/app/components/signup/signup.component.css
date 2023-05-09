@@ -1,0 +1,5 @@
+.image {
+  background: url('../../../assets/images/World_e-Atlas_Bright-Earth-e-Atlas-Basemap.preview.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 95vh;
+}
