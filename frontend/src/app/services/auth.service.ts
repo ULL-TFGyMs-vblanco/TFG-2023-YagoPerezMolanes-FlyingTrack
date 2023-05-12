@@ -6,12 +6,16 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
 
-  // private URL = 'http://127.0.0.1:5001/flying-trackft/us-central1/app'
-  private URL: string = 'http://localhost:3000';
+  private URL: string = 'https://trick-tracking-app-backend.herokuapp.com';
+  // private URL: string = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
 
   signUp(user: any) {
-    return this.http.post<any>(this.URL + '/api/signup', user);
+    return this.http.post<any>(this.URL + '/signUp', user);
+  }
+
+  signIn(user: any) {
+    return this.http.post<any>(this.URL + '/signIn', user);
   }
 }

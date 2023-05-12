@@ -1,7 +1,11 @@
+/*  este estilo se utiliza para crear una barra de navegación fija 
+que esté siempre visible en la parte superior de la página, incluso cuando 
+el usuario se desplace hacia abajo */
+
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1; /* Make sure the navigation bar is above the map */
+  z-index: 1; /* Asi la barra de navegacion esta por encima del mapa */
 }

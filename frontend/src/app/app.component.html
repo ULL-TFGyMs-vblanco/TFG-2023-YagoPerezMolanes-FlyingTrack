@@ -1,23 +1,23 @@
 <!-- Este fragmento de codigo fue sacado de bootstrap, para la barra de navegacion -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
-    <a class="navbar-brand" routerLink="/home">Frontend</a>
+    <a class="navbar-brand" routerLink="/home"><strong> Trip Tracking TT </strong></a>
     <button class="navbar-toggler" type="button" (click)="toggleNavbar()" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" [ngClass]="{'show': navbarOpen}" id="navbarNav">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item ml-auto">
-          <a class="nav-link" routerLink="/tracking">Tracking <span class="sr-only">(current)</span></a>
+          <a class="nav-link" routerLink="/tracking"><strong> Tracking </strong><span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item ml-auto">
-          <a class="nav-link" routerLink="/myroutes">Mis rutas</a>
+          <a class="nav-link" routerLink="/myroutes"><strong> Mis rutas</strong></a>
         </li>
         <li class="nav-item ml-auto">
-          <a class="nav-link" routerLink="/signin">Iniciar sesión</a>
+          <a class="nav-link" routerLink="/signin"><strong> Iniciar sesión </strong></a>
         </li>
         <li class="nav-item ml-auto">
-          <a class="nav-link" routerLink="/signup">Registrarse</a>
+          <a class="nav-link" routerLink="/signup"><strong> Registrarse </strong></a>
         </li>
       </ul>
     </div>
@@ -26,9 +26,4 @@
 
 <!-- Este es el enrutador, nos va a mostrar distintas rutas que visitemos -->
 <router-outlet></router-outlet>
-
-
-
-
-
 

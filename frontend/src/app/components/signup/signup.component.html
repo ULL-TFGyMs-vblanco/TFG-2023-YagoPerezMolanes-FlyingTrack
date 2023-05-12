@@ -2,6 +2,7 @@
 
 </div>
 <h3>Regístrate en la Aplicación</h3>
+
 <div class="image">
   <div class="container p-5">
     <div class="row">
@@ -13,10 +14,10 @@
           <div class="card-body">
             <form (submit)="signUp()">
               <div class="form-group">
-                <input  type="text" [(ngModel)]="user.email" name="Correo" class="form-control" placeholder="Correo electrónico" required autofocus/>
+                <input  type="text" [(ngModel)]="user.email" name="Correo" class="form-control" placeholder="Correo electrónico" required autofocus #emailInput/>
               </div>
               <div class="form-group">
-                <input  type="text" [(ngModel)]="user.name" name="NombreUsuario" class="form-control" placeholder="Nombre de usuario" required/>
+                <input  type="text" [(ngModel)]="user.name" name="NombreUsuario" class="form-control" placeholder="Nombre de usuario" required #nameInput/>
               </div>
               <div class="form-group">
                 <input  type="password" [(ngModel)]="user.password" name="Contrasena" class="form-control" placeholder="Contraseña" required/>
