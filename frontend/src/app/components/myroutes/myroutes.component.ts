@@ -1,5 +1,8 @@
 import { AfterViewInit, Component } from '@angular/core';
 import * as L from 'leaflet';
+import { Observer } from 'rxjs';
+
+import { RoutesService } from 'src/app/services/routes.service';
 
 @Component({
   selector: 'app-myroutes',
@@ -11,8 +14,18 @@ export class MyroutesComponent implements AfterViewInit {
   // objeto mapa de leaflet
   private map: any;
 
-   // crea el mapa de leaflet, y le envia la capa de mosaicos
-   private initMap(): void {
+  // objeto que representa las rutas que el usuario
+  // obtiene de la base de datos cuando realiza una busqueda 
+  // por nombre de usuario o por duracion 
+  routes: any[] = [];
+
+  // parametros de busqueda de las rutas, el nombre de usuario
+  // y la duracion
+  userId: string = '';
+  duration: number | null = null;
+
+  // crea el mapa de leaflet, y le envia la capa de mosaicos
+  private initMap(): void {
 
     this.map = L.map('map', {
       center: [ 0, 0 ],
@@ -31,7 +44,27 @@ export class MyroutesComponent implements AfterViewInit {
     container.parentElement.style.position = 'relative';
   }
   
+  searchRoutes(): void {
+    const observer: Observer<any> = {
+      next: (response) => {
+        this.routes = response;
+      },
+      error: (error) => {
+        alert(error);
+      },
+      complete: () => {
+        // Opcional: lógica a ejecutar cuando la operación asincrónica esté completa
+      }
+    };
+  
+    this.routesService.searchRoutes(this.userId, this.duration).subscribe(observer);
+  }
+
   ngAfterViewInit(): void {
     this.initMap();
+  }
+
+  constructor(private routesService: RoutesService) {
+
   }
 }

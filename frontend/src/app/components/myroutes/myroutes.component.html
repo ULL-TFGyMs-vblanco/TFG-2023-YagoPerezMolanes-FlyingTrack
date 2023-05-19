@@ -6,3 +6,17 @@
 
 </div>
 
+<!-- Your component template -->
+<form (ngSubmit)="searchRoutes()">
+  <input type="text" [(ngModel)]="userId" name="username" placeholder="Username">
+  <input type="number" [(ngModel)]="duration" name="duration" placeholder="Duration">
+
+  <button type="submit">Search</button>
+</form>
+
+<ul>
+  <li *ngFor="let route of routes">
+    <!-- Display route information here -->
+    {{ route.userId }}, {{ route.duration }}, {{ route.averageSpeed }}, {{ route.meanAltitude }}
+  </li>
+</ul>
