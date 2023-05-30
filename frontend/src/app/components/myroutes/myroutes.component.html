@@ -4,19 +4,31 @@
     <div id="map"></div>
   </div>
 
+  <div class="container p-3">
+
+  </div>
+
+  <!-- Your component template -->
+  <form (ngSubmit)="searchRoutes()">
+    <!-- <input type="text" [(ngModel)]="startRouteDate" name="startRouteDate" placeholder="Fecha de inicio"> -->
+    <input type="number" [(ngModel)]="duration" name="duration" placeholder="Duración">
+    <input type="number" [(ngModel)]="routeStartDay" name="routeStartDay" placeholder="Día">
+    <input type="number" [(ngModel)]="routeStartMonth" name="routeStartMonth" placeholder="Mes">
+    <input type="number" [(ngModel)]="routeStartYear" name="routeStartYear" placeholder="Año">
+
+    <button type="submit" class="btn btn-primary">Buscar</button>
+    <!-- <button type="submit" class="btn btn-primary" (click)="cancelPosition()">Clean</button> -->
+  </form>
+
+  <div class="container p-3">
+
+  </div>
+
+  <ul>
+    <li *ngFor="let route of routes" (click)="selectRoute(route)">
+      <!-- Display route information here -->
+      Usuario: <b>{{ route.userId }}</b> -- Día: <b>{{route.routeStartDay}}</b> -- Mes: <b>{{route.routeStartMonth}}</b> -- Año: <b>{{route.routeStartYear}}</b> -- Duración: <b>{{ route.duration }}</b> minutos -- Velocidad media: <b>{{ route.averageSpeed }}</b> m/s -- Altitud media:  <b>{{ route.meanAltitude }}</b>
+    </li>
+  </ul>
+
 </div>
-
-<!-- Your component template -->
-<form (ngSubmit)="searchRoutes()">
-  <input type="text" [(ngModel)]="userId" name="username" placeholder="Username">
-  <input type="number" [(ngModel)]="duration" name="duration" placeholder="Duration">
-
-  <button type="submit">Search</button>
-</form>
-
-<ul>
-  <li *ngFor="let route of routes">
-    <!-- Display route information here -->
-    {{ route.userId }}, {{ route.duration }}, {{ route.averageSpeed }}, {{ route.meanAltitude }}
-  </li>
-</ul>

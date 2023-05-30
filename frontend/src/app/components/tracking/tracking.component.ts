@@ -1,5 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+// import { MatDialog } from '@angular/material/dialog';
 
 import * as L from 'leaflet';
 // importamos la liberia leaflet
@@ -8,6 +9,7 @@ import { SignupComponent } from '../signup/signup.component';
 import { SigninComponent } from '../signin/signin.component';
 
 import { RoutesService } from 'src/app/services/routes.service';
+import { Observer } from 'rxjs';
 
 @Component({
   selector: 'app-tracking',
@@ -51,7 +53,10 @@ export class TrackingComponent implements AfterViewInit {
     ],
     "duration": 0,
     "averageSpeed": 0,
-    "meanAltitude": 0
+    "meanAltitude": 0,
+    "routeStartDay": 1,
+    "routeStartMonth": 1,
+    "routeStartYear": 2023
   }
   
   // Opciones para el calculo de la geolocalizacion inicial, incluye la precision deseada de los datos de 
@@ -135,12 +140,16 @@ export class TrackingComponent implements AfterViewInit {
   trackPosition(): void {
     // asigna la fecha actual 
     this.startDate =  new Date();
+    this.path.routeStartDay = new Date().getDate();
+    this.path.routeStartMonth = new Date().getMonth() + 1;
+    this.path.routeStartYear = new Date().getFullYear();
 
     // crea en objeto para pintar la ruta
     let path: L.LatLngExpression[] = [];
     const polyline = L.polyline(path, {color: 'red'}).addTo(this.map);
 
     if (navigator.geolocation) {
+
       navigator.geolocation.watchPosition((position) => {
         const latLng: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
         const marker = L.marker(latLng, {icon: this.trackingUserIcon}).addTo(this.map);
@@ -184,7 +193,7 @@ export class TrackingComponent implements AfterViewInit {
       
       });
     } else {
-      alert('Geolocation is not supported by your browser');
+      alert('La geolocalización no está permitida en tu dispositivo');
     }
   }
 
@@ -201,21 +210,29 @@ export class TrackingComponent implements AfterViewInit {
     this.path.duration = subMinutes;
 
     // calcula la velocidad y altura medias y se las pasa al objeto path
-    const averageSpeed = this.sumSpeed / this.countSpeed;
-    const meanAltitude = this.sumAltitude / this.countAltitude;
+    if (this.sumSpeed != 0 && this.countSpeed != 0) {
+      const averageSpeed = this.sumSpeed / this.countSpeed;
+      this.path.averageSpeed = averageSpeed;
+    }
 
-    this.path.averageSpeed = averageSpeed;
+    const meanAltitude = this.sumAltitude / this.countAltitude;
     this.path.meanAltitude = meanAltitude;
 
-    this.routesService.saveRoute(this.path).subscribe(
-      res => {
+    const observer: Observer<any> = {
+      next: (response) => {
+        console.log(response);
         this.router.navigate(['/myroutes']);
       },
-      err => {
-        alert(err.error);
+      error: (error) => {
+        alert(error);
         this.router.navigate(['/home']);
+      },
+      complete: () => {
+        // Opcional: lógica a ejecutar cuando la operación asincrónica esté completa
       }
-    );
+    };
+
+    this.routesService.saveRoute(this.path).subscribe(observer);
     
   }
 
