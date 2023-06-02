@@ -1,12 +1,12 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { MatDialog } from '@angular/material/dialog';
 
 import * as L from 'leaflet';
 // importamos la liberia leaflet
 
 import { SignupComponent } from '../signup/signup.component';
 import { SigninComponent } from '../signin/signin.component';
+import { MyroutesComponent } from '../myroutes/myroutes.component';
 
 import { RoutesService } from 'src/app/services/routes.service';
 import { Observer } from 'rxjs';
@@ -42,6 +42,8 @@ export class TrackingComponent implements AfterViewInit {
   private sumSpeed: number = 0;
   private sumAltitude: number = 0;
 
+  public shareRoute: boolean = false;
+
   // objeto que represetna la ruta, que se va a enviar al servidor
   path = {
     "userId": '',
@@ -56,7 +58,8 @@ export class TrackingComponent implements AfterViewInit {
     "meanAltitude": 0,
     "routeStartDay": 1,
     "routeStartMonth": 1,
-    "routeStartYear": 2023
+    "routeStartYear": 2023,
+    "shared": false
   }
   
   // Opciones para el calculo de la geolocalizacion inicial, incluye la precision deseada de los datos de 
@@ -79,8 +82,8 @@ export class TrackingComponent implements AfterViewInit {
   // create icon object
   private trackingUserIcon = L.icon({
     iconUrl: '../../../assets/icons/icon-track.png',
-    iconSize: [40, 40], // size of the icon
-    iconAnchor: [20, 40], // point of the icon which will correspond to marker's location
+    iconSize: [10, 10], // size of the icon
+    iconAnchor: [5, 5], // point of the icon which will correspond to marker's location
     popupAnchor: [0, -40], // point from which the popup should open relative to the iconAnchor
   });
 
@@ -217,6 +220,8 @@ export class TrackingComponent implements AfterViewInit {
 
     const meanAltitude = this.sumAltitude / this.countAltitude;
     this.path.meanAltitude = meanAltitude;
+
+    this.path.shared = this.shareRoute;
 
     const observer: Observer<any> = {
       next: (response) => {

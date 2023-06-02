@@ -1,0 +1,34 @@
+<div class="container p-5">
+
+</div>
+
+<div *ngIf="showMap">
+  <div class="map-container">
+    <div class="map-frame">
+      <div id="map"></div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showCards">
+  <div class="card-container">
+    <div class="card" *ngFor="let route of sharedRoutes" (click)="selectRoute(route)">
+      <div class="card-header">
+        <h3>{{ route.userId }}</h3>
+      </div>
+      <div class="card-body">
+        <p>Duración: {{ route.duration }} minutos</p>
+        <p>Velocidad Media: {{ route.averageSpeed }} m/s</p>
+        <p>Altura Media: {{route.meanAltitude }} metros</p>
+        <p>Día: {{route.routeStartDay }}</p>
+        <p>Mes: {{route.routeStartMonth }}</p>
+        <p>Año: {{route.routeStartYear }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  

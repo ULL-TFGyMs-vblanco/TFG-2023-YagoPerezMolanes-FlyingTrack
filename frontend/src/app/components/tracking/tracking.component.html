@@ -14,6 +14,11 @@
     <button class="cancel-route-button" (click)="cancelPosition()">Cancelar ruta</button>
   </div>
 
+  <label>
+    Compartir ruta:
+    <input type="checkbox" [(ngModel)]="shareRoute" />
+  </label>
+
   <h6>Para usar esta funcionalidad necesitas estar autenticado</h6>
     
   <div class="info-box">

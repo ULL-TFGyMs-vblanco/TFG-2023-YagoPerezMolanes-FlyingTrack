@@ -23,7 +23,12 @@ export class RoutesService {
       routeStartYear: routeStartYear?.toString() || ''
     };
 
-    return this.http.get<any[]>(this.URL + '/paths', { params: query });
+    return this.http.get<any[]>(this.URL + '/myPaths', { params: query });
+  }
+
+  getSharedRoutes(): Observable<any> {
+
+    return this.http.get<any>(this.URL + '/social');
   }
 
 }
