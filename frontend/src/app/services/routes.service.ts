@@ -14,8 +14,9 @@ export class RoutesService {
     return this.http.post<any>(this.URL + '/paths', path);
   }
 
-  searchRoutes(userId: string, duration: number | null, routeStartDay: number | null, routeStartMonth: number | null, routeStartYear: number | null): Observable<any> {
+  searchRoutes(pathName: string | null, userId: string, duration: number | null, routeStartDay: number | null, routeStartMonth: number | null, routeStartYear: number | null): Observable<any> {
     const query = {
+      pathName: pathName?.toString() || '',
       userId: userId,
       duration: duration?.toString() || '',
       routeStartDay: routeStartDay?.toString() || '',

@@ -42,10 +42,12 @@ export class TrackingComponent implements AfterViewInit {
   private sumSpeed: number = 0;
   private sumAltitude: number = 0;
 
+  public pathName: string = "";
   public shareRoute: boolean = false;
 
   // objeto que represetna la ruta, que se va a enviar al servidor
   path = {
+    "pathName": '',
     "userId": '',
     "path": [
       {
@@ -105,6 +107,40 @@ export class TrackingComponent implements AfterViewInit {
 
     const container = this.map.getContainer();
     container.parentElement.style.position = 'relative';
+
+    // Crear un botón personalizado
+    const CustomButton = L.Control.extend({
+      onAdd: function(map: any) {
+        // Crear el elemento del botón
+        const button = L.DomUtil.create('button', 'custom-button');
+        const icon = L.DomUtil.create('i', 'fas fa-map-marker-alt'); // Cambia la clase del icono según tus necesidades
+        button.appendChild(icon);
+      
+        // Agregar evento click al botón
+        L.DomEvent.on(button, 'click', () => {
+          if (navigator.geolocation) {
+
+            navigator.geolocation.getCurrentPosition((position) => {
+              const latLng: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
+              // const marker = L.marker(latLng, {icon: this.trackingUserIcon}).addTo(map);
+      
+              map.setView(latLng, 16);
+
+            
+            });
+          } else {
+            alert('La geolocalización no está permitida en tu dispositivo');
+          }
+        });
+      
+        return button;
+      }
+    });
+    
+
+    // Agregar el botón personalizado al mapa
+    this.map.addControl(new CustomButton({ position: 'topright' }));
+
   }
 
   // calcula la geolocalizacion inicial y la muestra en el mapa
@@ -165,7 +201,7 @@ export class TrackingComponent implements AfterViewInit {
 
         path.push(latLng);
         polyline.setLatLngs(path);
-        this.map.setView(latLng, 16);
+        // this.map.setView(latLng, 16);
 
         // actualiza los valores de los datos de geolocalizacion, de cara al html
         this.actualLtd = position.coords.latitude;
@@ -221,6 +257,7 @@ export class TrackingComponent implements AfterViewInit {
     const meanAltitude = this.sumAltitude / this.countAltitude;
     this.path.meanAltitude = meanAltitude;
 
+    this.path.pathName = this.pathName;
     this.path.shared = this.shareRoute;
 
     const observer: Observer<any> = {
@@ -274,16 +311,16 @@ export class TrackingComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.initMap();
     this.getInitialLocation();
-      // Add click event listener to map
-    this.map.on('click', (event: any) => {
-      if (this.markerCount == 0) {
-        const latlng = event.latlng;
-        const marker = L.marker(latlng, {icon: this.geolocationIcon}).addTo(this.map);
-        this.markerCount += 1;
-      } else {
-        return;
-      }
-    });
+    //   // Add click event listener to map
+    // this.map.on('click', (event: any) => {
+    //   if (this.markerCount == 0) {
+    //     const latlng = event.latlng;
+    //     const marker = L.marker(latlng, {icon: this.geolocationIcon}).addTo(this.map);
+    //     this.markerCount += 1;
+    //   } else {
+    //     return;
+    //   }
+    // });
   }
 
 }

@@ -65,4 +65,9 @@ export class SocialComponent implements AfterViewInit {
     L.polyline(coordinates).addTo(this.map);
   }
 
+  returnShowCards() {
+    this.showMap = false;
+    this.showCards = true
+  }
+
 }

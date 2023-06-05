@@ -25,6 +25,7 @@ export class MyroutesComponent implements AfterViewInit {
 
   // parametros de busqueda de las rutas, el nombre de usuario, 
   // la fecha de inicio de la ruta y la duracion
+  pathName: string = '';
   userId: string = '';
   duration: number | null = null;
 
@@ -70,7 +71,7 @@ export class MyroutesComponent implements AfterViewInit {
       }
     };
   
-    this.routesService.searchRoutes(this.userId, this.duration, this.routeStartDay, this.routeStartMonth, this.routeStartYear).subscribe(observer);
+    this.routesService.searchRoutes(this.pathName, this.userId, this.duration, this.routeStartDay, this.routeStartMonth, this.routeStartYear).subscribe(observer);
   }
 
   drawRouteOnMap(route: any) {

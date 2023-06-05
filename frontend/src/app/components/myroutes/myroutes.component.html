@@ -11,6 +11,7 @@
   <!-- Your component template -->
   <form (ngSubmit)="searchRoutes()">
     <!-- <input type="text" [(ngModel)]="startRouteDate" name="startRouteDate" placeholder="Fecha de inicio"> -->
+    <input type="text" [(ngModel)]="pathName" name="pathName" placeholder="Nombre">
     <input type="number" [(ngModel)]="duration" name="duration" placeholder="Duración">
     <input type="number" [(ngModel)]="routeStartDay" name="routeStartDay" placeholder="Día">
     <input type="number" [(ngModel)]="routeStartMonth" name="routeStartMonth" placeholder="Mes">
@@ -27,7 +28,7 @@
   <ul>
     <li *ngFor="let route of routes" (click)="selectRoute(route)">
       <!-- Display route information here -->
-      Usuario: <b>{{ route.userId }}</b> -- Día: <b>{{route.routeStartDay}}</b> -- Mes: <b>{{route.routeStartMonth}}</b> -- Año: <b>{{route.routeStartYear}}</b> -- Duración: <b>{{ route.duration }}</b> minutos -- Velocidad media: <b>{{ route.averageSpeed }}</b> m/s -- Altitud media:  <b>{{ route.meanAltitude }}</b>
+      Nombre: <b>{{ route.pathName }}</b> -- Usuario: <b>{{ route.userId }}</b> -- Día: <b>{{route.routeStartDay}}</b> -- Mes: <b>{{route.routeStartMonth}}</b> -- Año: <b>{{route.routeStartYear}}</b> -- Duración: <b>{{ route.duration }}</b> minutos -- Velocidad media: <b>{{ route.averageSpeed }}</b> m/s -- Altitud media:  <b>{{ route.meanAltitude }}</b>
     </li>
   </ul>
 
