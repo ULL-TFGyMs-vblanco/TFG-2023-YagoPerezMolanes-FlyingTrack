@@ -6,7 +6,6 @@ import * as L from 'leaflet';
 
 import { SignupComponent } from '../signup/signup.component';
 import { SigninComponent } from '../signin/signin.component';
-import { MyroutesComponent } from '../myroutes/myroutes.component';
 
 import { RoutesService } from 'src/app/services/routes.service';
 import { Observer } from 'rxjs';
@@ -206,9 +205,10 @@ export class TrackingComponent implements AfterViewInit {
         // actualiza los valores de los datos de geolocalizacion, de cara al html
         this.actualLtd = position.coords.latitude;
         this.actualLng = position.coords.longitude;
-        this.actualAlt = position.coords.altitude;
-        this.actualHead = position.coords.heading;
-        this.actualSpeed = position.coords.speed;
+        // para que no aparezcan tantos decimales
+        this.actualAlt = Number(position.coords.altitude?.toFixed(3));
+        this.actualHead = Number(position.coords.heading?.toFixed(3));
+        this.actualSpeed = Number(position.coords.speed?.toFixed(3));
 
         // anade un objeto de localizacion al vector del objeto path 
         const actualCoords = {
@@ -251,11 +251,11 @@ export class TrackingComponent implements AfterViewInit {
     // calcula la velocidad y altura medias y se las pasa al objeto path
     if (this.sumSpeed != 0 && this.countSpeed != 0) {
       const averageSpeed = this.sumSpeed / this.countSpeed;
-      this.path.averageSpeed = averageSpeed;
+      this.path.averageSpeed = Number(averageSpeed.toFixed(3));
     }
 
     const meanAltitude = this.sumAltitude / this.countAltitude;
-    this.path.meanAltitude = meanAltitude;
+    this.path.meanAltitude = Number(meanAltitude.toFixed(3));
 
     this.path.pathName = this.pathName;
     this.path.shared = this.shareRoute;
