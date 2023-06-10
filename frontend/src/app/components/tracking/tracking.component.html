@@ -14,17 +14,27 @@
     <button class="cancel-route-button" (click)="cancelPosition()">Cancelar ruta</button>
   </div>
 
-  <label>
+  <!-- <label>
     Compartir ruta:
     <input type="checkbox" [(ngModel)]="shareRoute" />
-  </label>
-
+  </label> -->
+<!-- 
   <div class="container p-2">
 
+  </div> -->
+
+  <!-- <label for="routeName">Nombre de la ruta:</label>
+  <input type="text" id="routeName" [(ngModel)]="pathName"> -->
+
+  <div class="form-group">
+    Compartir ruta:
+    <input type="checkbox" [(ngModel)]="shareRoute" />
   </div>
 
-  <label for="routeName">Nombre de la ruta:</label>
-  <input type="text" id="routeName" [(ngModel)]="pathName">
+  <div class="form-group">
+    <label for="routeName">Nombre de la ruta:</label>
+    <input type="text" id="routeName" [(ngModel)]="pathName">
+  </div>
 
   <!-- <h6>Para usar esta funcionalidad necesitas estar autenticado</h6> -->
     

@@ -11,8 +11,9 @@ import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { FormsModule } from '@angular/forms';
 
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SocialComponent } from './components/social/social.component'
+import { HttpClientModule } from '@angular/common/http';
+import { SocialComponent } from './components/social/social.component';
+import { ModifyroutesComponent } from './components/modifyroutes/modifyroutes.component'
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SocialComponent } from './components/social/social.component'
     TrackingComponent,
     SigninComponent,
     SignupComponent,
-    SocialComponent
+    SocialComponent,
+    ModifyroutesComponent
   ],
   imports: [
     BrowserModule,

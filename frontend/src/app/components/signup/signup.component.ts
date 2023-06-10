@@ -16,7 +16,7 @@ export class SignupComponent implements OnInit{
     password: ''
   };
 
-  static userName: string = '';
+  static userName = '';
 
   @ViewChild('emailInput') emailInput!: ElementRef;
   @ViewChild('nameInput') nameInput!: ElementRef;

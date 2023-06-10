@@ -34,15 +34,20 @@ export class TrackingComponent implements AfterViewInit {
   private endDate: any;
 
   // contador del numero de velocidades y altitudes calculadas en la ruta
-  private countSpeed: number = 0;
-  private countAltitude: number = 0;
+  private countSpeed = 0;
+  private countAltitude = 0;
 
   // suma de los valores de las velocidades y altitudes calculadas en la ruta
-  private sumSpeed: number = 0;
-  private sumAltitude: number = 0;
+  private sumSpeed = 0;
+  private sumAltitude = 0;
 
-  public pathName: string = "";
-  public shareRoute: boolean = false;
+  public pathName = "";
+  public shareRoute = false;
+
+  public maxSpeed = 0;
+  public minSpeed = 0;
+  public maxAltitude = 0;
+  public minAltitude = 0;
 
   // objeto que represetna la ruta, que se va a enviar al servidor
   path = {
@@ -60,7 +65,11 @@ export class TrackingComponent implements AfterViewInit {
     "routeStartDay": 1,
     "routeStartMonth": 1,
     "routeStartYear": 2023,
-    "shared": false
+    "shared": false,
+    "maxSpeed": 0,
+    "minSpeed": 0,
+    "maxAltitude": 0,
+    "minAltitude": 0,
   }
   
   // Opciones para el calculo de la geolocalizacion inicial, incluye la precision deseada de los datos de 
@@ -90,6 +99,13 @@ export class TrackingComponent implements AfterViewInit {
 
   // crea el mapa de leaflet, y le envia la capa de mosaicos
   private initMap(): void {
+
+    const geolocationIcon = L.icon({
+      iconUrl: '../../../assets/icons/icon-geolocation.png',
+      iconSize: [40, 40], // size of the icon
+      iconAnchor: [20, 40], // point of the icon which will correspond to marker's location
+      popupAnchor: [0, -40], // point from which the popup should open relative to the iconAnchor
+    });
 
     this.map = L.map('map', {
       center: [ 0, 0 ],
@@ -121,7 +137,7 @@ export class TrackingComponent implements AfterViewInit {
 
             navigator.geolocation.getCurrentPosition((position) => {
               const latLng: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
-              // const marker = L.marker(latLng, {icon: this.trackingUserIcon}).addTo(map);
+              const marker = L.marker(latLng, {icon: geolocationIcon}).addTo(map);
       
               map.setView(latLng, 16);
 
@@ -158,9 +174,14 @@ export class TrackingComponent implements AfterViewInit {
 
       this.actualLtd = position.coords.latitude;
       this.actualLng = position.coords.longitude;
-      this.actualAlt = position.coords.altitude;
-      this.actualHead = position.coords.heading;
-      this.actualSpeed = position.coords.speed;
+      this.actualAlt = Number(position.coords.altitude?.toFixed(3));
+      this.actualHead = Number(position.coords.heading?.toFixed(3));
+      this.actualSpeed = Number(position.coords.speed?.toFixed(3));
+
+      this.maxSpeed = -1;
+      this.minSpeed = 999;
+      this.maxAltitude = -1;
+      this.minAltitude = 999;
 
       const marker = L.marker(latLng, {icon: this.geolocationIcon}).addTo(this.map);
     } catch (error: any) {
@@ -183,7 +204,7 @@ export class TrackingComponent implements AfterViewInit {
     this.path.routeStartYear = new Date().getFullYear();
 
     // crea en objeto para pintar la ruta
-    let path: L.LatLngExpression[] = [];
+    const path: L.LatLngExpression[] = [];
     const polyline = L.polyline(path, {color: 'red'}).addTo(this.map);
 
     if (navigator.geolocation) {
@@ -197,7 +218,6 @@ export class TrackingComponent implements AfterViewInit {
           opacity: 0.3,
           fillOpacity: 0.1
         }).addTo(this.map);
-
         path.push(latLng);
         polyline.setLatLngs(path);
         // this.map.setView(latLng, 16);
@@ -210,12 +230,22 @@ export class TrackingComponent implements AfterViewInit {
         this.actualHead = Number(position.coords.heading?.toFixed(3));
         this.actualSpeed = Number(position.coords.speed?.toFixed(3));
 
+        if (Number.isNaN(this.actualSpeed)) {
+          this.actualSpeed = 0;
+        }
+
+        if (Number.isNaN(this.actualAlt)) {
+          this.actualAlt = 0;
+        }
+
         // anade un objeto de localizacion al vector del objeto path 
         const actualCoords = {
           latitude : this.actualLtd,
-          longitude : this.actualLng
+          longitude : this.actualLng,
+          speed: this.actualSpeed,
+          altitude: this.actualAlt
         };
-        this.path.path.push(actualCoords);
+        // this.path.path.push(actualCoords);
 
         // aqui suma el contador del numero de velocidades y alturas, y suma los valores
         // para despues calcular la media 
@@ -229,6 +259,32 @@ export class TrackingComponent implements AfterViewInit {
           this.countAltitude += 1;
           this.sumAltitude += position.coords.altitude;
         }
+
+        if (this.maxSpeed <= this.actualSpeed) {
+          this.maxSpeed = this.actualSpeed;
+        }
+
+        if (this.minSpeed >= this.actualSpeed) {
+          this.minSpeed = this.actualSpeed;
+        }
+
+        if (this.maxAltitude < this.actualAlt) {
+          this.maxAltitude = this.actualAlt;
+        }
+
+        if (this.minAltitude > this.actualAlt) {
+          this.minAltitude = this.actualAlt;
+        }
+
+        if (this.maxSpeed == null) {
+          this.maxSpeed = 0;
+        }
+
+        if (this.minSpeed == null) {
+          this.minSpeed = 0;
+        }
+
+        this.path.path.push(actualCoords);
       
       });
     } else {
@@ -260,13 +316,19 @@ export class TrackingComponent implements AfterViewInit {
     this.path.pathName = this.pathName;
     this.path.shared = this.shareRoute;
 
+    this.path.maxSpeed = this.maxSpeed;
+    this.path.minSpeed = this.minSpeed;
+
+    this.path.maxAltitude = this.maxAltitude;
+    this.path.minAltitude = this.minAltitude;
+
     const observer: Observer<any> = {
       next: (response) => {
         console.log(response);
         this.router.navigate(['/myroutes']);
       },
       error: (error) => {
-        alert(error);
+        alert(error.error);
         this.router.navigate(['/home']);
       },
       complete: () => {

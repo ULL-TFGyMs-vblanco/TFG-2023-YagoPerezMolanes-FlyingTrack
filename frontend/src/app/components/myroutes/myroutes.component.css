@@ -18,3 +18,23 @@
   position: sticky;
   height: 100%;
 }
+
+ul li {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f7f7f7;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+ul li:hover {
+  background-color: #eaeaea;
+}
+
+ul li b {
+  font-weight: bold;
+}
+
+ul li span {
+  margin-right: 10px;
+}

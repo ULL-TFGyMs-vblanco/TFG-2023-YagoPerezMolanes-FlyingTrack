@@ -11,10 +11,25 @@ import { RoutesService } from 'src/app/services/routes.service';
 export class SocialComponent implements AfterViewInit {
   public sharedRoutes: any[];
   public selectedRoute: any;
-  public showMap: boolean = false;
-  public showCards: boolean = true;
+  public showMap = false;
+  public showCards = true;
 
   private map: any;
+
+    // create icon object
+    private startGeolocationIcon = L.icon({
+      iconUrl: '../../../assets/icons/icon-location-a.png',
+      iconSize: [20, 20], // size of the icon
+      iconAnchor: [10, 20], // point of the icon which will correspond to marker's location
+      popupAnchor: [0, -40], // point from which the popup should open relative to the iconAnchor
+    });
+  
+    private finalGeolocationIcon = L.icon({
+      iconUrl: '../../../assets/icons//icon-location-b.png',
+      iconSize: [20, 20], // size of the icon
+      iconAnchor: [10, 20], // point of the icon which will correspond to marker's location
+      popupAnchor: [0, -40], // point from which the popup should open relative to the iconAnchor
+    });
 
   constructor(private routesService: RoutesService) {
     this.sharedRoutes = []
@@ -62,7 +77,14 @@ export class SocialComponent implements AfterViewInit {
   
     // Dibujar la ruta en el mapa
     const coordinates = this.selectedRoute.path.map((point: { latitude: any; longitude: any; }) => [point.latitude, point.longitude]);
+
+    const latLngInitial = L.latLng(coordinates[0]);
+    const markerInitial = L.marker(latLngInitial, {icon: this.startGeolocationIcon}).addTo(this.map);
+
     L.polyline(coordinates).addTo(this.map);
+
+    const latLngFinal = L.latLng(coordinates[coordinates.length - 1]);
+    const markerFinal = L.marker(latLngFinal, {icon: this.finalGeolocationIcon}).addTo(this.map);
   }
 
   returnShowCards() {

@@ -14,28 +14,36 @@
     <ul>
       <li>
         <!-- Display route information here -->
-        Nombre: <b>{{ selectedRoute.pathName }}</b> -- Usuario: <b>{{ selectedRoute.userId }}</b> -- Día: <b>{{selectedRoute.routeStartDay}}</b> -- Mes: <b>{{selectedRoute.routeStartMonth}}</b> -- Año: <b>{{selectedRoute.routeStartYear}}</b> -- Duración: <b>{{ selectedRoute.duration }}</b> minutos -- Velocidad media: <b>{{ selectedRoute.averageSpeed }}</b> m/s -- Altitud media:  <b>{{ selectedRoute.meanAltitude }}</b>
+        Nombre: <b>{{ selectedRoute.pathName }}</b> -- Usuario: <b>{{ selectedRoute.userId }}</b> -- Día: <b>{{selectedRoute.routeStartDay}}</b> -- Mes: <b>{{selectedRoute.routeStartMonth}}</b> -- Año: <b>{{selectedRoute.routeStartYear}}</b> -- Duración: <b>{{ selectedRoute.duration }}</b> minutos -- Velocidad media: <b>{{ selectedRoute.averageSpeed }}</b> m/s 
+        -- Altitud media:  <b>{{ selectedRoute.meanAltitude }}</b> metros -- Vel. Máx: <b>{{ selectedRoute.maxSpeed }}</b> m/s -- Vel.Min: <b>{{ selectedRoute.minSpeed }}</b> m/s -- Altura Max.: <b>{{ selectedRoute.maxAltitude }}</b> metros -- Altura Mín.: <b>{{ selectedRoute.minAltitude }}</b> metros
       </li>
     </ul>
   </div>
 </div>
 
 <div *ngIf="showCards">
-  <div class="card-container">
-    <div class="card" *ngFor="let route of sharedRoutes" (click)="selectRoute(route)">
-      <div class="card-header">
-        <h3>{{ route.pathName }}</h3>
-        <h3>{{ route.userId }}</h3>
-      </div>
-      <div class="card-body">
-        <p>Duración: {{ route.duration }} minutos</p>
-        <p>Velocidad Media: {{ route.averageSpeed }} m/s</p>
-        <p>Altura Media: {{route.meanAltitude }} metros</p>
-        <p>Día: {{route.routeStartDay }}</p>
-        <p>Mes: {{route.routeStartMonth }}</p>
-        <p>Año: {{route.routeStartYear }}</p>
+  <div class="image">
+    <div class="card-container">
+      <div class="card" *ngFor="let route of sharedRoutes" (click)="selectRoute(route)">
+        <div class="card-header">
+          <h5>{{ route.pathName }}</h5>
+          <h5>{{ route.userId }}</h5>
+        </div>
+        <div class="card-body">
+          <p>Duración: {{ route.duration }} minutos</p>
+          <p>Velocidad Media: {{ route.averageSpeed }} m/s</p>
+          <p>Altura Media: {{route.meanAltitude }} metros</p>
+          <p>Día: {{route.routeStartDay }}</p>
+          <p>Mes: {{route.routeStartMonth }}</p>
+          <p>Año: {{route.routeStartYear }}</p>
+          <p>Vel Máx.: {{route.maxSpeed }} m/s</p> 
+          <p>Vel Mín.: {{route.minSpeed }} m/s</p>
+          <p>Altura Máx.: {{route.maxAltitude }} metros</p>
+          <p>Altura Mín.: {{route.minAltitude }} metros</p>
+        </div>
       </div>
     </div>
   </div>
+  
 </div>
 

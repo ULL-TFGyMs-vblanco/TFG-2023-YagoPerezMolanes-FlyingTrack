@@ -6,6 +6,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { TrackingComponent } from './components/tracking/tracking.component'; 
 import { MyroutesComponent } from './components/myroutes/myroutes.component';
+import { ModifyroutesComponent } from './components/modifyroutes/modifyroutes.component';
 import { HomeComponent } from './components/home/home.component';
 import { SocialComponent } from './components/social/social.component';
 
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'myroutes',
     component: MyroutesComponent
+  },
+  {
+    path: 'modifyroutes',
+    component: ModifyroutesComponent
   },
   {
     path: 'social',

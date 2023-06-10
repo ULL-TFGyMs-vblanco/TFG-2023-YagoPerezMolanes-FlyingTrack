@@ -8,6 +8,11 @@
 
   </div>
 
+  <!-- Botón para limpiar las rutas -->
+  <div class="container p-3">
+    <button class="btn btn-primary" (click)="clearRoutes()">Limpiar Rutas</button>
+  </div>
+
   <!-- Your component template -->
   <form (ngSubmit)="searchRoutes()">
     <!-- <input type="text" [(ngModel)]="startRouteDate" name="startRouteDate" placeholder="Fecha de inicio"> -->
@@ -28,7 +33,11 @@
   <ul>
     <li *ngFor="let route of routes" (click)="selectRoute(route)">
       <!-- Display route information here -->
-      Nombre: <b>{{ route.pathName }}</b> -- Usuario: <b>{{ route.userId }}</b> -- Día: <b>{{route.routeStartDay}}</b> -- Mes: <b>{{route.routeStartMonth}}</b> -- Año: <b>{{route.routeStartYear}}</b> -- Duración: <b>{{ route.duration }}</b> minutos -- Velocidad media: <b>{{ route.averageSpeed }}</b> m/s -- Altitud media:  <b>{{ route.meanAltitude }}</b>
+      Nombre: <b>{{ route.pathName }}</b> -- Usuario: <b>{{ route.userId }}</b> -- Día: <b>{{route.routeStartDay}}</b> -- Mes: <b>{{route.routeStartMonth}}</b> -- Año: <b>{{route.routeStartYear}}</b> -- Duración: <b>{{ route.duration }}</b> minutos -- Velocidad media: <b>{{ route.averageSpeed }}</b> m/s 
+      -- Altitud media:  <b>{{ route.meanAltitude }}</b> metros -- Vel. Máx: <b>{{ route.maxSpeed }}</b> m/s -- Vel.Min: <b>{{ route.minSpeed }}</b> m/s -- Altura Max.: <b>{{ route.maxAltitude }}</b> metros -- Altura Mín.: <b>{{ route.minAltitude }}</b> metros
+      <!-- Agregar botón para eliminar la ruta -->
+      <button class="btn btn-sm btn-danger" (click)="deleteRoute(route._id)">Eliminar</button>
+      <button class="btn btn-sm btn-danger" (click)="modifyRoute(route._id, route.pathName, route.shared)">Editar</button>
     </li>
   </ul>
 
