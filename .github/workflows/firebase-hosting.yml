@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Build Angular app
-        run: ng build
+        run: npm run build
 
       - name: Deploy to Firebase Hosting
         run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
