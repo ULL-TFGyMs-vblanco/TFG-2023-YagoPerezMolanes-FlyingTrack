@@ -137,11 +137,9 @@ export class TrackingComponent implements AfterViewInit {
               // sonarlint-ignore-next-line - La geolocalización es necesaria para obtener la ubicación actual del usuario
             navigator.geolocation.getCurrentPosition((position) => {
               const latLng: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
-              L.marker(latLng, {icon: geolocationIcon}).addTo(map);
       
               map.setView(latLng, 16);
 
-            
             });
           } else {
             alert('La geolocalización no está permitida en tu dispositivo');
