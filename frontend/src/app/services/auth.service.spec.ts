@@ -12,9 +12,6 @@ describe('AuthService', () => {
       imports: [HttpClientTestingModule],
       providers: [AuthService]
     });
-
-    authService = TestBed.inject(AuthService);
-    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   it('should make a POST request to signUp endpoint',

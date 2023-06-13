@@ -13,7 +13,6 @@ describe('RoutesService', () => {
       providers: [RoutesService]
     });
 
-    routesService = TestBed.inject(RoutesService);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 

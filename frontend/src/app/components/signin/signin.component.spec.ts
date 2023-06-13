@@ -43,7 +43,6 @@ describe('SigninComponent', () => {
 
     expect(authServiceSpy.signIn).toHaveBeenCalledWith(component.user);
     expect(SigninComponent.userName).toBe(component.user.name);
-    // expect(SignupComponent.userName).toBe(component.user.name);
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/tracking']);
   });
 
