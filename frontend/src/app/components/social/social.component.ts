@@ -17,14 +17,14 @@ export class SocialComponent implements AfterViewInit {
   private map: any;
 
     // create icon object
-    private startGeolocationIcon = L.icon({
+    public startGeolocationIcon = L.icon({
       iconUrl: '../../../assets/icons/icon-location-a.png',
       iconSize: [20, 20], // size of the icon
       iconAnchor: [10, 20], // point of the icon which will correspond to marker's location
       popupAnchor: [0, -40], // point from which the popup should open relative to the iconAnchor
     });
   
-    private finalGeolocationIcon = L.icon({
+    public finalGeolocationIcon = L.icon({
       iconUrl: '../../../assets/icons//icon-location-b.png',
       iconSize: [20, 20], // size of the icon
       iconAnchor: [10, 20], // point of the icon which will correspond to marker's location
