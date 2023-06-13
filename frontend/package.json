@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "test:prod": "ng test --code-coverage --watch=false",
+    "test:prod": "ng test --browsers=ChromeHeadless --code-coverage --no-watch --no-progress",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
