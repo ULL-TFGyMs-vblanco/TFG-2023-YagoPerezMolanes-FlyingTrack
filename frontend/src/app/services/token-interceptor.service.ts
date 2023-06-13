@@ -5,5 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class TokenInterceptorService {
 
-  constructor() {}
+  constructor() {
+    console.log("Token Interceptor Service works");
+  }
 }

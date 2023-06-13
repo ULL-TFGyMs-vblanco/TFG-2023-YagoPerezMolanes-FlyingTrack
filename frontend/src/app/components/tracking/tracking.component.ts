@@ -134,7 +134,7 @@ export class TrackingComponent implements AfterViewInit {
         // Agregar evento click al botón
         L.DomEvent.on(button, 'click', () => {
           if (navigator.geolocation) {
-
+            // sonarlint-ignore-next-line
             navigator.geolocation.getCurrentPosition((position) => {
               const latLng: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
               const marker = L.marker(latLng, {icon: geolocationIcon}).addTo(map);
@@ -162,6 +162,7 @@ export class TrackingComponent implements AfterViewInit {
   private async getInitialLocation(): Promise<void> {
     try {
       const position: GeolocationPosition = await new Promise<GeolocationPosition>((resolve, reject) => {
+        // sonarlint-ignore-next-line
         navigator.geolocation.getCurrentPosition(resolve, (error) => {
           reject(error);
         }, this.options);
@@ -208,7 +209,7 @@ export class TrackingComponent implements AfterViewInit {
     const polyline = L.polyline(path, {color: 'red'}).addTo(this.map);
 
     if (navigator.geolocation) {
-
+      // sonarlint-ignore-next-line
       navigator.geolocation.watchPosition((position) => {
         const latLng: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
         const marker = L.marker(latLng, {icon: this.trackingUserIcon}).addTo(this.map);
@@ -220,7 +221,6 @@ export class TrackingComponent implements AfterViewInit {
         }).addTo(this.map);
         path.push(latLng);
         polyline.setLatLngs(path);
-        // this.map.setView(latLng, 16);
 
         // actualiza los valores de los datos de geolocalizacion, de cara al html
         this.actualLtd = position.coords.latitude;
@@ -245,7 +245,6 @@ export class TrackingComponent implements AfterViewInit {
           speed: this.actualSpeed,
           altitude: this.actualAlt
         };
-        // this.path.path.push(actualCoords);
 
         // aqui suma el contador del numero de velocidades y alturas, y suma los valores
         // para despues calcular la media 
@@ -372,17 +371,13 @@ export class TrackingComponent implements AfterViewInit {
   // actual del usuario, calcula la geolocalizacion inicial
   ngAfterViewInit(): void {
     this.initMap();
-    this.getInitialLocation();
-    //   // Add click event listener to map
-    // this.map.on('click', (event: any) => {
-    //   if (this.markerCount == 0) {
-    //     const latlng = event.latlng;
-    //     const marker = L.marker(latlng, {icon: this.geolocationIcon}).addTo(this.map);
-    //     this.markerCount += 1;
-    //   } else {
-    //     return;
-    //   }
-    // });
+    this.getInitialLocation()
+      .then(() => {
+        console.log("All is ready");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
 }

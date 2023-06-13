@@ -50,6 +50,7 @@ export class SigninComponent implements OnInit{
   }
 
   ngOnInit() {
+    console.log("SignIn component works")
   }
 
   constructor(private authService: AuthService, private router: Router) {

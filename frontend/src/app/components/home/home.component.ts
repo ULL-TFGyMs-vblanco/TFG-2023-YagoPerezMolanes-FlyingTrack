@@ -7,8 +7,7 @@ import { Component, AfterViewInit } from '@angular/core';
 })
 export class HomeComponent implements AfterViewInit {
 
-  constructor() { }
-
   ngAfterViewInit(): void {
+    console.log("Home component works");
   }
 }

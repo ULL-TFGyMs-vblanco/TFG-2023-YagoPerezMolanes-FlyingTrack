@@ -15,13 +15,16 @@ export class RoutesService {
   }
 
   searchRoutes(pathName: string | null, userId: string, duration: number | null, routeStartDay: number | null, routeStartMonth: number | null, routeStartYear: number | null): Observable<any> {
+    // Si el primer operando es falsy en el operador de coalescencia nula (??), se considerará 
+    // como un valor válido y se devolverá el primer operando. La coalescencia nula solo verifica 
+    // si el primer operando es null o undefined, no si es falsy
     const query = {
-      pathName: pathName?.toString() || '',
+      pathName: pathName?.toString() ?? '',
       userId: userId,
-      duration: duration?.toString() || '',
-      routeStartDay: routeStartDay?.toString() || '',
-      routeStartMonth: routeStartMonth?.toString() || '',
-      routeStartYear: routeStartYear?.toString() || ''
+      duration: duration?.toString() ?? '',
+      routeStartDay: routeStartDay?.toString() ?? '',
+      routeStartMonth: routeStartMonth?.toString() ?? '',
+      routeStartYear: routeStartYear?.toString() ?? ''
     };
 
     return this.http.get<any[]>(this.URL + '/myPaths', { params: query });

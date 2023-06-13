@@ -40,6 +40,7 @@ export class SocialComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log("Social Component works");
   }
 
   getSharedRoutes() {

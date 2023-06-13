@@ -15,7 +15,6 @@
 
   <!-- Your component template -->
   <form (ngSubmit)="searchRoutes()">
-    <!-- <input type="text" [(ngModel)]="startRouteDate" name="startRouteDate" placeholder="Fecha de inicio"> -->
     <input type="text" [(ngModel)]="pathName" name="pathName" placeholder="Nombre">
     <input type="number" [(ngModel)]="duration" name="duration" placeholder="Duración">
     <input type="number" [(ngModel)]="routeStartDay" name="routeStartDay" placeholder="Día">
@@ -23,7 +22,6 @@
     <input type="number" [(ngModel)]="routeStartYear" name="routeStartYear" placeholder="Año">
 
     <button type="submit" class="btn btn-primary">Buscar</button>
-    <!-- <button type="submit" class="btn btn-primary" (click)="cancelPosition()">Clean</button> -->
   </form>
 
   <div class="container p-3">

@@ -39,7 +39,8 @@ export class ModifyroutesComponent {
 
   constructor(private router: Router, private routesService: RoutesService) {
     const currentNavigation = this.router.getCurrentNavigation();
-    if (currentNavigation && currentNavigation.extras.state) {
+    // es lo mismo que usar currentNavigation && currentNavigation.extras.state
+    if (currentNavigation?.extras?.state) {
       const currentState = currentNavigation.extras.state;
       this.routeId = currentState['routeId'];
       this.pathName = currentState['pathName'];

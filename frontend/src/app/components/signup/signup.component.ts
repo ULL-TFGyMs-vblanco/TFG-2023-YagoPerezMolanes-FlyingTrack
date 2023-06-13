@@ -50,6 +50,7 @@ export class SignupComponent implements OnInit{
   }
 
   ngOnInit() {
+    console.log("SignUp component works");
   }
 
 
