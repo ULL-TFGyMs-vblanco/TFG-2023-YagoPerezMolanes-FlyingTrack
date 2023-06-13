@@ -123,7 +123,6 @@ export class MyroutesComponent implements AfterViewInit {
   }
 
   drawRouteOnMap(route: any) {
-    // this.initMap();
 
     if (!this.map) return;
 
@@ -170,7 +169,11 @@ export class MyroutesComponent implements AfterViewInit {
       (error) => {
         console.log('Error deleting route:', error);
         // Manejar el error, como mostrar un mensaje de error o registrarlo en la consola
-        const errorMessage = error && error.message ? error.message : 'Error al eliminar la ruta';
+        // La expresión de encadenamiento opcional (?.) se utiliza para acceder a las propiedades
+        // de un objeto cuando dicho objeto puede ser nulo o indefinido
+        // El operador de expresión nula (??) es un operador de JavaScript que se utiliza para proporcionar 
+        // un valor predeterminado en caso de que un operando sea null o undefined
+        const errorMessage = error?.message?? 'Error al eliminar la ruta';
         alert('Error al eliminar la ruta: ' + errorMessage);
         this.clearRoutes();
         this.searchRoutes();

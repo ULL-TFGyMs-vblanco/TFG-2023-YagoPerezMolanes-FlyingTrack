@@ -134,7 +134,7 @@ export class TrackingComponent implements AfterViewInit {
         // Agregar evento click al botón
         L.DomEvent.on(button, 'click', () => {
           if (navigator.geolocation) {
-            // sonarlint-ignore-next-line
+              // sonarlint-ignore-next-line - La geolocalización es necesaria para obtener la ubicación actual del usuario
             navigator.geolocation.getCurrentPosition((position) => {
               const latLng: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
               const marker = L.marker(latLng, {icon: geolocationIcon}).addTo(map);
@@ -162,7 +162,7 @@ export class TrackingComponent implements AfterViewInit {
   private async getInitialLocation(): Promise<void> {
     try {
       const position: GeolocationPosition = await new Promise<GeolocationPosition>((resolve, reject) => {
-        // sonarlint-ignore-next-line
+                      // sonarlint-ignore-next-line - La geolocalización es necesaria para obtener la ubicación actual del usuario
         navigator.geolocation.getCurrentPosition(resolve, (error) => {
           reject(error);
         }, this.options);
@@ -209,7 +209,7 @@ export class TrackingComponent implements AfterViewInit {
     const polyline = L.polyline(path, {color: 'red'}).addTo(this.map);
 
     if (navigator.geolocation) {
-      // sonarlint-ignore-next-line
+      // sonarlint-ignore-next-line - La geolocalización es necesaria para obtener la ubicación actual del usuario
       navigator.geolocation.watchPosition((position) => {
         const latLng: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
         const marker = L.marker(latLng, {icon: this.trackingUserIcon}).addTo(this.map);
