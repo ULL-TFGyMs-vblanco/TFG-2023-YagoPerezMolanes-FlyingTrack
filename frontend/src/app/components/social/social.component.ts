@@ -80,12 +80,12 @@ export class SocialComponent implements AfterViewInit {
     const coordinates = this.selectedRoute.path.map((point: { latitude: any; longitude: any; }) => [point.latitude, point.longitude]);
 
     const latLngInitial = L.latLng(coordinates[0]);
-    const markerInitial = L.marker(latLngInitial, {icon: this.startGeolocationIcon}).addTo(this.map);
+    L.marker(latLngInitial, {icon: this.startGeolocationIcon}).addTo(this.map);
 
     L.polyline(coordinates).addTo(this.map);
 
     const latLngFinal = L.latLng(coordinates[coordinates.length - 1]);
-    const markerFinal = L.marker(latLngFinal, {icon: this.finalGeolocationIcon}).addTo(this.map);
+    L.marker(latLngFinal, {icon: this.finalGeolocationIcon}).addTo(this.map);
   }
 
   returnShowCards() {

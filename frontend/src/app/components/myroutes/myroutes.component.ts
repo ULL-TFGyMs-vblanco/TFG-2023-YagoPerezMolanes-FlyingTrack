@@ -131,13 +131,13 @@ export class MyroutesComponent implements AfterViewInit {
     const coordinates: L.LatLngExpression[] = route.path.map((point: { latitude: number; longitude: number; }) => L.latLng(point.latitude, point.longitude));
     
     const latLngInitial = L.latLng(coordinates[0]);
-    const markerInitial = L.marker(latLngInitial, {icon: this.startGeolocationIcon}).addTo(this.map);
+    L.marker(latLngInitial, {icon: this.startGeolocationIcon}).addTo(this.map);
 
     // Create a polyline using the coordinates and add it to the map
     const polyline = L.polyline(coordinates, { color: 'blue' }).addTo(this.map);
 
     const latLngFinal = L.latLng(coordinates[coordinates.length - 1]);
-    const markerFinal = L.marker(latLngFinal, {icon: this.finalGeolocationIcon}).addTo(this.map);
+    L.marker(latLngFinal, {icon: this.finalGeolocationIcon}).addTo(this.map);
 
     this.map.fitBounds(polyline.getBounds());
   }

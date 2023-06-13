@@ -137,7 +137,7 @@ export class TrackingComponent implements AfterViewInit {
               // sonarlint-ignore-next-line - La geolocalización es necesaria para obtener la ubicación actual del usuario
             navigator.geolocation.getCurrentPosition((position) => {
               const latLng: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
-              const marker = L.marker(latLng, {icon: geolocationIcon}).addTo(map);
+              L.marker(latLng, {icon: geolocationIcon}).addTo(map);
       
               map.setView(latLng, 16);
 
@@ -184,7 +184,7 @@ export class TrackingComponent implements AfterViewInit {
       this.maxAltitude = -1;
       this.minAltitude = 999;
 
-      const marker = L.marker(latLng, {icon: this.geolocationIcon}).addTo(this.map);
+      L.marker(latLng, {icon: this.geolocationIcon}).addTo(this.map);
     } catch (error: any) {
       if (error.code === 1) {
         alert('Permission denied: ' + error.message);
@@ -212,8 +212,8 @@ export class TrackingComponent implements AfterViewInit {
       // sonarlint-ignore-next-line - La geolocalización es necesaria para obtener la ubicación actual del usuario
       navigator.geolocation.watchPosition((position) => {
         const latLng: L.LatLngExpression = [position.coords.latitude, position.coords.longitude];
-        const marker = L.marker(latLng, {icon: this.trackingUserIcon}).addTo(this.map);
-        const circle = L.circle(latLng, {
+        L.marker(latLng, {icon: this.trackingUserIcon}).addTo(this.map);
+        L.circle(latLng, {
           radius: position.coords.accuracy,
           color: 'purple',
           opacity: 0.3,
