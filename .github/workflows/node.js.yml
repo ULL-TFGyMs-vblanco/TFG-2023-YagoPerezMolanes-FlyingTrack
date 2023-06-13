@@ -15,7 +15,7 @@ jobs:
    
    defaults:
       run:
-        working-directory: flying-track-ft
+        working-directory: frontend
     
    strategy:
       matrix:
